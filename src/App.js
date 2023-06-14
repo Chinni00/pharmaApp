@@ -33,7 +33,9 @@ const cartItemsHandler = (medicine) => {
   setCartItems((prevMedicine) => [...prevMedicine, medicine]);
 };
 
-
+const onResetCart=()=>{
+  setCartItems([]);
+}
 
 const onFormSubmit =(medicine)=>{
   setAvailableMedicine(prevMedicine=>[...prevMedicine,medicine])
@@ -42,7 +44,7 @@ const onFormSubmit =(medicine)=>{
   return (
    
 
-    <context.Provider value={[availableMedicine,onFormSubmit,cartItemsHandler,cartItems]} className="App">
+    <context.Provider value={[availableMedicine,onFormSubmit,cartItemsHandler,cartItems,onResetCart]} className="App">
        <div  >{isCartShow && <Cart />} <p style={{cursor:'pointer',textAlign:'end',marginRight:'100px'}} onClick={()=>{setIsCartShow(!isCartShow)}}>Cart</p></div> 
      <Form />
      <AvailableMedicine  />

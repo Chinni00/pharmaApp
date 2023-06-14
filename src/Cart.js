@@ -1,9 +1,10 @@
 import './Cart.css'
 import { context } from './App'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 const Cart = () => {
-const [cartItems] = useContext(context)
+const [availableMedicine,onFormSubmit,cartItemsHandler,cartItems,onResetCart] = useContext(context)
+
 
 
 
@@ -15,7 +16,7 @@ const [cartItems] = useContext(context)
                 {medicine.medicineName}-{medicine.description}-{medicine.price}
             </li>
             )}
-        <button>Generate Bill</button>
+        <button onClick={onResetCart}>Generate Bill</button>
     </div>
   )
 }
