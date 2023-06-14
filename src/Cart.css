@@ -1,0 +1,12 @@
+.container{
+    width: 90vw;
+    height: 90vh;
+    background-color: #cccc;
+   
+    text-align: center;
+   
+    margin-top: 40px;
+    margin-left: 40px;
+    position: absolute;
+
+}
