@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { context } from "./App"
 
 
@@ -6,8 +6,10 @@ import { context } from "./App"
 const AvailableMedicine = () => {
     const [availableMedicine,onFormSubmit,cartItemsHandler] = useContext(context);
 
+
     const addToCartHandler=(medicine)=>{
         cartItemsHandler(medicine)
+        
     }
 
     const rupeeSymbol = "\u20B9"

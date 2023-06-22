@@ -2,9 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
 import AvailableMedicine from './AvailableMedicine';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createContext } from 'react';
-import { Router,Routes,Route,Link } from 'react-router-dom';
+import { Router,Routes,Route,Link, json } from 'react-router-dom';
 import Cart from './Cart';
 
 export const context= createContext();
@@ -13,6 +13,7 @@ export const context= createContext();
 
 function App() {
   const [cartItems,setCartItems] = useState([]);
+  const [total,setTotal] = useState(0)
   const [isCartShow ,setIsCartShow] =useState(false)
   const[availableMedicine,setAvailableMedicine]= useState([
     {
@@ -30,12 +31,31 @@ function App() {
 ])
 
 const cartItemsHandler = (medicine) => {
-  setCartItems((prevMedicine) => [...prevMedicine, medicine]);
+
+   setCartItems((prevMedicine) => [...prevMedicine, medicine]);
+
+   setTotal(prevTotal=> prevTotal+medicine.price)
+   localStorage.setItem('total',total)
+
 };
 
 const onResetCart=()=>{
+
   setCartItems([]);
+
+  localStorage.setItem('medicine',JSON.stringify([]))
+  
 }
+
+useEffect(()=>{
+  if(cartItems.length>0){
+    localStorage.setItem('medicine',JSON.stringify(cartItems))
+    localStorage.setItem('total',total)
+  }
+},[cartItems])
+
+
+
 
 const onFormSubmit =(medicine)=>{
   setAvailableMedicine(prevMedicine=>[...prevMedicine,medicine])
@@ -44,8 +64,8 @@ const onFormSubmit =(medicine)=>{
   return (
    
 
-    <context.Provider value={[availableMedicine,onFormSubmit,cartItemsHandler,cartItems,onResetCart]} className="App">
-       <div  >{isCartShow && <Cart />} <p style={{cursor:'pointer',textAlign:'end',marginRight:'100px'}} onClick={()=>{setIsCartShow(!isCartShow)}}>Cart</p></div> 
+    <context.Provider value={[availableMedicine,onFormSubmit,cartItemsHandler,cartItems,onResetCart,total]} className="App">
+       <div  >{isCartShow && <Cart />} <p style={{cursor:'pointer',textAlign:'end',marginRight:'100px'}} onClick={()=>{setIsCartShow(!isCartShow)}}>Cart({JSON.parse(localStorage.getItem('medicine')).length})</p></div> 
      <Form />
      <AvailableMedicine  />
     </context.Provider>
